@@ -3,52 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Video Password Prompt</title>
-  <link rel="stylesheet" href="access.css">
-  
+  <title>Hidden X</title>
+  <link rel="stylesheet" href="css\access.css">
+  <link rel="icon" type="image/x-icon" href="media\icon.png">
 </head>
 <body>
   <div class="centered-content">
     <p id="password-label">Enter Password</p>
     <span class="password-container" id="password-container"> [ <input type="password" id="sipassword" maxlength="10" autofocus=""> ] </span>
-    <div id="game-container" class="game-container" style="display: none;">
-      <div class="game-widget" id="game1">
-        <div class="game-title">Game 1</div>
-        <div class="game-description">Description of Game 1</div>
-      </div>
-      <div class="game-widget" id="game2">
-        <div class="game-title">Game 2</div>
-        <div class="game-description">Description of Game 2</div>
-      </div>
-      <div class="game-widget" id="game3">
-        <div class="game-title">Game 3</div>
-        <div class="game-description">Description of Game 3</div>
-      </div>
-      <div class="game-widget" id="game4">
-        <div class="game-title">Game 4</div>
-        <div class="game-description">Description of Game 4</div>
-      </div>
-      <div class="game-widget" id="game5">
-        <div class="game-title">Game 5</div>
-        <div class="game-description">Description of Game 5</div>
-      </div>
-      <div class="game-widget" id="game6">
-        <div class="game-title">Game 6</div>
-        <div class="game-description">Description of Game 6</div>
-      </div>
-      <div class="game-widget" id="game7">
-        <div class="game-title">Game 7</div>
-        <div class="game-description">Description of Game 7</div>
-      </div>
-      <div class="game-widget" id="game8">
-        <div class="game-title">Game 8</div>
-        <div class="game-description">Description of Game 8</div>
-      </div>
-      <div class="game-widget" id="game9">
-        <div class="game-title">Game 9</div>
-        <div class="game-description">Description of Game 9</div>
-      </div>
-    </div>
   </div>
 
   <!-- Overlay for incorrect message -->
@@ -70,88 +32,6 @@
     </div>
   </div>
 
-  <script>
-    function showAccessingMessage() {
-      // Display the accessing overlay
-      document.getElementById('accessing-overlay').style.display = 'block';
-      // Start fake progress animation
-      var width = 1;
-      var interval = setInterval(function() {
-        if (width >= 100) {
-          clearInterval(interval);
-          // Hide the accessing overlay and show the game container after 2 seconds
-          setTimeout(function() {
-            document.getElementById('accessing-overlay').style.display = 'none';
-            document.getElementById('game-container').style.display = 'grid'; // Display the game grid after loading animation
-          }, 2000);
-        } else {
-          width++;
-          document.getElementById('progressBar').style.width = width + '%';
-          document.getElementById('accessing-loading-percentage').innerHTML = width + '%';
-        }
-      }, 20);
-    }
-
-    function showGrantedMessage() {
-      // Display the granted overlay
-      document.getElementById('granted-overlay').style.display = 'block';
-      // Display the granted box
-      document.getElementById('granted-box').style.display = 'block';
-      // Hide the password field
-      document.getElementById('password-label').style.display = 'none';
-      document.getElementById('password-container').style.display = 'none';
-      // Hide the game container
-      document.getElementById('game-container').style.display = 'none'; // Hide the game grid initially
-      // Hide the granted overlay and box after 2 seconds
-      setTimeout(function() {
-        document.getElementById('granted-overlay').style.display = 'none';
-        document.getElementById('granted-box').style.display = 'none';
-        showAccessingMessage(); // Call function to show accessing message after granted message disappears
-      }, 2000);
-    }
-
-    document.getElementById('sipassword').addEventListener('keydown', function(event) {
-      if (event.key === 'Enter') {
-        checkPassword();
-      }
-    });
-
-    function checkPassword() {
-      const password = document.getElementById('sipassword').value;
-      if (password === '123') {
-        showGrantedMessage();
-      } else {
-        showIncorrectMessage();
-      }
-    }
-
-    function showIncorrectMessage() {
-      // Hide the "Enter Password" text and password input field
-      document.getElementById('password-label').style.display = 'none';
-      document.getElementById('password-container').style.display = 'none';
-      // Display the incorrect overlay
-      document.getElementById('incorrect-overlay').style.display = 'block';
-      // Display the incorrect box
-      document.getElementById('incorrect-box').style.display = 'block';
-      // Hide the incorrect overlay and box after 2 seconds
-      setTimeout(function() {
-        // Restore the "Enter Password" text and password input field
-        document.getElementById('password-label').style.display = 'block';
-        document.getElementById('password-container').style.display = 'inline';
-        document.getElementById('incorrect-overlay').style.display = 'none';
-        document.getElementById('incorrect-box').style.display = 'none';
-      }, 2000);
-    }
-
-    // Fade in animation for game widgets
-    window.addEventListener('load', function() {
-      const gameWidgets = document.querySelectorAll('.game-widget');
-      gameWidgets.forEach(function(widget, index) {
-        setTimeout(function() {
-          widget.classList.add('active');
-        }, index * 200);
-      });
-    });
-  </script>
+  <script src="js\access.js"></script>
 </body>
 </html>
