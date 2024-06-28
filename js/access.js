@@ -115,7 +115,7 @@ function showGameGrid() {
 
   const gameGrid = gameGridContainer.querySelector(".game-grid");
 
-  for (let i = 0; i < 9; i++) {
+  for (let i = 0; i < 12; i++) {
     const gameWidget = document.createElement("div");
     gameWidget.className = "game-widget";
 
@@ -172,19 +172,28 @@ function redirectToGame(gameNumber) {
       url = "snake.html";
       break;
     case 5:
-      url = "https://emupedia.net/beta/emuos/";
+      url = "https://slowroads.io/";
       break;
     case 6:
-      url = "https://slowroads.io/";
+      url = "https://emupedia.net/beta/emuos/";
       break;
     case 7:
       url = "https://soundcloud.com/zhgotthatplug";
       break;
     case 8:
-      url = "";
+      url = "https://clicktheredbutton.com/";
       break;
     case 9:
-      url = "";
+      url = "https://www.playdosgames.com/";
+      break;
+    case 10:
+      url = "https://archive.org/details/internetarcade";
+      break;
+    case 11:
+      url = "https://sites.google.com/site/tyronesgamesez/";
+      break;
+    case 12:
+      url = "https://gamesfrog.com/";
       break;
     // Add cases for all game numbers as needed
     default:
