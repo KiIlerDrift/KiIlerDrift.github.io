@@ -207,13 +207,61 @@ button:hover {
   animation: hover 0.5s; /* Apply hover animation on hover */
 }
 
-
-.game-title {
-  font-size: 24px;
-  margin-bottom: 10px;
+/* Prevent page from scrolling */
+html, body {
+  overflow: hidden;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.game-description {
-  font-size: 16px;
-  text-align: center;
+#countdown-timer {
+  font-size: 24px;
+  color: #00FF19;
+  margin-top: 10px;
+}
+
+#game-grid-container {
+  display: none; /* Initially hidden */
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+  background-color: #000;
+  position: fixed; /* Make sure it covers the entire viewport */
+  top: 0;
+  left: 0;
+  z-index: 1000; /* Make sure it is above other content */
+}
+
+.game-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.game-widget {
+  width: 150px;
+  height: 150px;
+  background-color: #333;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.2s;
+  border: 2px solid #00FF19;
+}
+
+.game-widget:hover {
+  transform: scale(1.05);
+}
+
+.game-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }

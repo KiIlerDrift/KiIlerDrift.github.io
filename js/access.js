@@ -6,10 +6,10 @@ function showAccessingMessage() {
   var interval = setInterval(function () {
     if (width >= 100) {
       clearInterval(interval);
-      // Hide the accessing overlay after 2 seconds and show "COMING SOON" message
+      // Hide the accessing overlay after 2 seconds and show game grid
       setTimeout(function () {
         document.getElementById("accessing-overlay").style.display = "none";
-        showComingSoonMessage();
+        showGameGrid();
       }, 2000);
     } else {
       width++;
@@ -25,16 +25,38 @@ function showGrantedMessage() {
   document.getElementById("granted-overlay").style.display = "block";
   // Display the granted box
   document.getElementById("granted-box").style.display = "block";
-  // Hide the password field
-  document.getElementById("password-label").style.display = "none";
-  document.getElementById("password-container").style.display = "none";
-  // Hide the granted overlay and box after 2 seconds
-  setTimeout(function () {
+
+  // Hide the password input elements immediately
+  hidePasswordInputElements();
+
+  // Set a session storage flag
+  sessionStorage.setItem("accessGranted", "true");
+
+  // Start countdown timer
+  startCountdown(3, function () {
+    // Change the countdown duration to 3 seconds
     document.getElementById("granted-overlay").style.display = "none";
     document.getElementById("granted-box").style.display = "none";
     showAccessingMessage(); // Call function to show accessing message after granted message disappears
-  }, 2000);
+  });
 }
+
+
+// Check if access has been granted before (right at the beginning)
+const accessGranted = sessionStorage.getItem('accessGranted');
+if (accessGranted === 'true') {
+  // Hide password input elements if access is already granted
+  hidePasswordInputElements();
+  // Proceed to show content or perform other actions
+  showAccessingMessage(); // Or any other action you want to perform
+}
+
+// Function to hide password input elements
+function hidePasswordInputElements() {
+  document.getElementById("password-label").style.display = "none";
+  document.getElementById("password-container").style.display = "none";
+}
+
 
 document
   .getElementById("sipassword")
@@ -44,9 +66,25 @@ document
     }
   });
 
-function checkPassword() {
+async function hashPassword(password) {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(password);
+  const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  const hashHex = hashArray
+    .map((b) => b.toString(16).padStart(2, "0"))
+    .join("");
+  return hashHex;
+}
+
+async function checkPassword() {
   const password = document.getElementById("sipassword").value;
-  if (password === "123") {
+  const hashedPassword = await hashPassword(password);
+
+  const correctHashedPassword =
+    "1d22361441e3fbb819be3d6d0d39d011769f1d1d1de72a195bdc6d8ce18ffdba";
+
+  if (hashedPassword === correctHashedPassword) {
     showGrantedMessage();
   } else {
     showIncorrectMessage();
@@ -71,26 +109,88 @@ function showIncorrectMessage() {
   }, 2000);
 }
 
-function showComingSoonMessage() {
-  const comingSoonOverlay = document.createElement("div");
-  comingSoonOverlay.id = "coming-soon-overlay";
-  comingSoonOverlay.style.position = "fixed";
-  comingSoonOverlay.style.top = "0";
-  comingSoonOverlay.style.left = "0";
-  comingSoonOverlay.style.width = "100%";
-  comingSoonOverlay.style.height = "100%";
-  comingSoonOverlay.style.display = "flex";
-  comingSoonOverlay.style.alignItems = "center";
-  comingSoonOverlay.style.justifyContent = "center";
-  comingSoonOverlay.style.backgroundColor = "rgba(0, 0, 0, 0.8)";
-  comingSoonOverlay.style.zIndex = "1000";
+function showGameGrid() {
+  const gameGridContainer = document.getElementById("game-grid-container");
+  gameGridContainer.style.display = "flex";
 
-  const comingSoonText = document.createElement("div");
-  comingSoonText.id = "coming-soon-text";
-  comingSoonText.textContent = "COMING SOON";
-  comingSoonText.style.fontSize = "48px";
-  comingSoonText.style.color = "#ffffff";
+  const gameGrid = gameGridContainer.querySelector(".game-grid");
 
-  comingSoonOverlay.appendChild(comingSoonText);
-  document.body.appendChild(comingSoonOverlay);
+  for (let i = 0; i < 9; i++) {
+    const gameWidget = document.createElement("div");
+    gameWidget.className = "game-widget";
+
+    const gameImage = document.createElement("img");
+    gameImage.src = `media/widgets/image${i + 1}.png`;
+    gameImage.alt = `Game ${i + 1}`;
+    gameImage.className = "game-image";
+
+    // Add a click event listener to each game widget
+    gameWidget.addEventListener("click", function () {
+      redirectToGame(i + 1); // Redirect to a function with the game number as parameter
+    });
+
+    gameWidget.appendChild(gameImage);
+    gameGrid.appendChild(gameWidget);
+  }
 }
+
+function startCountdown(seconds, callback) {
+  const countdownElement = document.getElementById("countdown-timer");
+  countdownElement.style.display = "block";
+  let remainingSeconds = seconds;
+
+  countdownElement.textContent = `Starting in ${remainingSeconds}`;
+
+  const interval = setInterval(() => {
+    remainingSeconds--;
+    if (remainingSeconds <= 0) {
+      clearInterval(interval);
+      countdownElement.style.display = "none";
+      callback();
+    } else {
+      countdownElement.textContent = `Starting in ${remainingSeconds}`;
+    }
+  }, 1000);
+}
+
+function redirectToGame(gameNumber) {
+  let url;
+  // Determine the URL based on the game number
+  switch (gameNumber) {
+    case 1:
+      url = "https://nzp.gay/";
+      break;
+    case 2:
+      url = "https://minecraftforfreex.com/eaglercraft/";
+      break;
+    case 3:
+      url = "https://mathadventure1.github.io/sm64/";
+      url2 = "https://augustberchelmann.com/mario/";
+      window.open(url2, "_blank");
+      break;
+    case 4:
+      url = "snake.html";
+      break;
+    case 5:
+      url = "https://emupedia.net/beta/emuos/";
+      break;
+    case 6:
+      url = "https://slowroads.io/";
+      break;
+    case 7:
+      url = "https://soundcloud.com/zhgotthatplug";
+      break;
+    case 8:
+      url = "";
+      break;
+    case 9:
+      url = "";
+      break;
+    // Add cases for all game numbers as needed
+    default:
+      url = "index.html"; // Default fallback URL
+  }
+  // Open the URL in a new tab
+  window.open(url, "_blank");
+}
+

@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hidden X</title>
+  <title>Hub</title>
   <link rel="stylesheet" href="css/access.css">
-  <link rel="icon" type="image/x-icon" href="media\icon.png">
+  <link rel="icon" type="image/x-icon" href="media/icon.png">
 </head>
 <body>
   <div class="centered-content">
@@ -19,7 +19,10 @@
   </div>
 
   <div id="granted-overlay">
-    <div id="granted-box">ACCESS GRANTED</div>
+    <div id="granted-box">
+      ACCESS GRANTED
+      <div id="countdown-timer"></div>
+    </div>
   </div>
 
   <div id="accessing-overlay" style="display: none;">
@@ -29,6 +32,12 @@
         <div id="progressBar"></div>
         <div id="accessing-loading-percentage">0%</div>
       </div>
+    </div>
+  </div>
+
+  <div id="game-grid-container">
+    <div class="game-grid">
+      <!-- Game widgets will be dynamically inserted here -->
     </div>
   </div>
 
