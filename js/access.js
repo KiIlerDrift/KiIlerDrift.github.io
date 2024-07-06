@@ -82,7 +82,7 @@ async function checkPassword() {
   const hashedPassword = await hashPassword(password);
 
   const correctHashedPassword =
-    "1d22361441e3fbb819be3d6d0d39d011769f1d1d1de72a195bdc6d8ce18ffdba";
+    "42b53fc5201d421318a9a032df88cadb377de27445be87e7cc5b51a08c5e9b01";
 
   if (hashedPassword === correctHashedPassword) {
     showGrantedMessage();
@@ -172,10 +172,10 @@ function redirectToGame(gameNumber) {
       url = "snake.html";
       break;
     case 5:
-      url = "https://slowroads.io/";
+      url = "https://www.crazygames.com/game/super-hot";
       break;
     case 6:
-      url = "https://emupedia.net/beta/emuos/";
+      url = "https://badtimesimulator.io/";
       break;
     case 7:
       url = "https://soundcloud.com/zhgotthatplug";
@@ -190,7 +190,7 @@ function redirectToGame(gameNumber) {
       url = "https://archive.org/details/internetarcade";
       break;
     case 11:
-      url = "https://sites.google.com/site/tyronesgamesez/";
+      url = "https://guesstheprice.net/";
       break;
     case 12:
       url = "https://gamesfrog.com/";
